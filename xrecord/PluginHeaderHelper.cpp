@@ -15,7 +15,19 @@ MyInterfaceStruct** startScreenCapturePlugin()
     MyInterfaceStruct **interface = NULL;
     
     //create a url that points to plug-in using the hard-coded path
-    CFURLRef pluginUrl = CFURLCreateWithFileSystemPath(NULL, CFSTR("/Library/CoreMediaIO/Plug-Ins/DAL/iOSScreenCapture.plugin"), CFURLPathStyle(0), true);
+    CFURLRef pluginUrlSierra = CFURLCreateWithFileSystemPath(NULL, CFSTR("/Library/CoreMediaIO/Plug-Ins/DAL/iOSScreenCapture.plugin"), CFURLPathStyle(0), true);
+    CFURLRef pluginUrlHighSierra = CFURLCreateWithFileSystemPath(NULL, CFSTR("/Library/CoreMediaIO/Plug-Ins/FCP-DAL/iOSScreenCapture.plugin"), CFURLPathStyle(0), true);
+    CFURLRef pluginUrl = NULL;
+    
+    if(CFURLResourceIsReachable(pluginUrlSierra, NULL)) {
+        pluginUrl = pluginUrlSierra;
+    }
+    if(CFURLResourceIsReachable(pluginUrlHighSierra, NULL)) {
+        pluginUrl = pluginUrlHighSierra;
+    }
+    if(pluginUrl == NULL) {
+        return interface;
+    }
     
     CFPlugInAddInstanceForFactory(pluginFactoryRef);
     

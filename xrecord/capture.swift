@@ -31,7 +31,7 @@ func listDevices() {
         let device = object as! AVCaptureDevice
         let deviceID = device.uniqueID
         let deviceName = device.localizedName
-        print("\(deviceID): \(deviceName)")
+        print("\(deviceID!): \(deviceName!)")
     }
 }
   
